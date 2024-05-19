@@ -34,15 +34,15 @@ func TestTransferTx(t *testing.T) {
 
 	for i := 0; i < n; i++ {
 		err := <-errs
-		require.NotEmpty(t, err)
+		require.NoError(t, err)
 
 		result := <-results
 		require.NotEmpty(t, result)
 
 		transfer := result.Transfer
 		require.NotEmpty(t, transfer)
-		require.Equal(t, account1.ID, transfer.ToAccountID)
-		require.Equal(t, account2.ID, transfer.FromAccountID)
+		require.Equal(t, account1.ID, transfer.FromAccountID)
+		require.Equal(t, account2.ID, transfer.ToAccountID)
 		require.Equal(t, amount, transfer.Amount)
 		require.NotZero(t, transfer.ID)
 		require.NotZero(t, transfer.CreatedAt)
