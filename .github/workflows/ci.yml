@@ -1,3 +1,4 @@
+# TODO: Fuck this sh*tt, Test fail at installation. I will use the docker instead in the future lecture
 name: ci-test
 
 on:
