@@ -38,11 +38,11 @@ jobs:
 
       - name: Install golang-migrate
         run: |
-          mkdir migrate.linux-amd64
+          mkdir migrate
           cd migrate.linux-amd64
           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.0/migrate.linux-arm64.tar.gz | tar xvz
           cd ..
-          sudo mv migrate.linux-amd64 /usr/bin/migrate
+          sudo mv migrate /usr/bin/migrate
           which migrate
 
       - name: Run migrations
