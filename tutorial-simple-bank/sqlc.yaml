@@ -5,6 +5,7 @@ sql:
     schema: "./db/migration/"
     gen:
       go:
-        package: "sqlc"
+        package: "db"
         out: "./db/sqlc"
         sql_package: "database/sql"
+        emit_empty_slices: true
