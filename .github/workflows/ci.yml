@@ -1,4 +1,3 @@
-# TODO: Fuck this sh*tt, Test fail at installation. I will use the docker instead in the future lecture
 name: ci-test
 
 on:
@@ -37,17 +36,19 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - name: Install golang-migrate
-        run: |
-          mkdir migrate
-          cd migrate
-          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.0/migrate.linux-arm64.tar.gz | tar xvz
-          cd ..
-          sudo mv migrate /usr/bin/migrate
-          which migrate
+      # TODO: Fuck this sh*tt, Test fail at installation. I will use the docker instead in the future lecture
 
-      - name: Run migrations
-        run: make migrateup
+      # - name: Install golang-migrate
+      #   run: |
+      #     mkdir migrate
+      #     cd migrate
+      #     curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.0/migrate.linux-arm64.tar.gz | tar xvz
+      #     cd ..
+      #     sudo mv migrate /usr/bin/migrate
+      #     which migrate
+
+      # - name: Run migrations
+      #   run: make migrateup
 
       - name: Test
         run: make test
