@@ -5,7 +5,7 @@
 https://github.com/techschool/simplebank
 
 Previous commit lecture:
-https://github.com/techschool/simplebank/commits/master/?after=931b0d98159595bac39f569a4a0cef2235c750de+104
+https://github.com/techschool/simplebank/commits/master/?before=931b0d98159595bac39f569a4a0cef2235c750de+105
 
 ### Run Docker
 
