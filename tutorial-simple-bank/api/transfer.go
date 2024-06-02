@@ -23,11 +23,11 @@ func (server *Server) createTransfer(ctx *gin.Context) {
 		return
 	}
 
-	if !server.validAccount(ctx, req.FromAccountID, req.Currency) {
+	if !server.validAccount(ctx, req.FromAccountID, req.Currency, req.Amount, true) {
 		return
 	}
 
-	if !server.validAccount(ctx, req.ToAccountID, req.Currency) {
+	if !server.validAccount(ctx, req.ToAccountID, req.Currency, req.Amount, false) {
 		return
 	}
 
@@ -46,7 +46,7 @@ func (server *Server) createTransfer(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
-func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency string) bool {
+func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency string, amount int64, isFromAccount bool) bool {
 	account, err := server.store.GetAccount(ctx, accountID)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -60,6 +60,12 @@ func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency s
 
 	if account.Currency != currency {
 		err := fmt.Errorf("account [%d] currency mismatch: %s vs %s", account.ID, account.Currency, currency)
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return false
+	}
+
+	if isFromAccount && account.Balance < amount {
+		err := fmt.Errorf("account [%d] invalid balance: %d vs %d", account.ID, account.Balance, amount)
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return false
 	}
