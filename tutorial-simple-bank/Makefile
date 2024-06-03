@@ -1,3 +1,5 @@
+MIGRATE_NAME ?= update_table
+
 postgres:
 	docker run --name simple-postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 
@@ -12,6 +14,9 @@ migrateup:
 
 migratedown:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
+create-new-migration:
+	migrate create -ext sql -dir db/migration -seq $(MIGRATE_NAME)
 
 sqlc:
 	sqlc generate
