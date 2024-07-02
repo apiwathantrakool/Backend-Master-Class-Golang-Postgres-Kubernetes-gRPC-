@@ -23,3 +23,7 @@ https://dbdiagram.io/d/%5Btutorial%5DSimple-bank-65ffa82dae072629ceccb8e2
 
 - `make postgres`
 - `make test`
+
+### Get start
+
+- `docker compose up`
