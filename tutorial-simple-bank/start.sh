@@ -2,10 +2,11 @@
 
 set -e
 
-echo "run db migration"
+echo "Waiting for the database to be ready..."
 /app/wait-for.sh db:5432 -t 300
-make migrateup DB_URL=$DB_URL
-/app/main make server
 
-echo "start the app"
-exec "$@"
+echo "Running database migration..."
+migrate -path ./db/migration -database "$DB_URL" -verbose up
+
+echo "Starting the application..."
+exec /app/main

@@ -1,3 +1,4 @@
+# Stage 1: Build the Go application and install golang-migrate
 FROM golang:1.21.11 AS builder
 WORKDIR /app
 
@@ -14,7 +15,7 @@ COPY . .
 # Build the application
 RUN go build -o main main.go
 
-# Create a new stage from scratch
+# Stage 2: Set up the runtime environment
 FROM golang:1.21.11
 
 # Set the working directory
@@ -23,11 +24,9 @@ WORKDIR /app
 # Install netcat-traditional and make for wait-for-it.sh and make commands
 RUN apt-get update && apt-get install -y netcat-traditional make
 
-# Ensure golang-migrate is installed and available in PATH
-COPY --from=builder /go/bin/migrate /usr/local/bin/migrate
-
 # Copy the compiled binary, migration files, and wait-for-it.sh script from the builder stage
 COPY --from=builder /app/main .
+COPY --from=builder /go/bin/migrate /usr/local/bin/migrate
 COPY --from=builder /app/db/migration ./db/migration
 COPY Makefile .
 COPY app.env .
