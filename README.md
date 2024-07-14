@@ -31,6 +31,7 @@ https://dbdiagram.io/d/%5Btutorial%5DSimple-bank-65ffa82dae072629ceccb8e2
 
 ## Run app with Docker
 
+- Update env to use docker db path at tutorial-simple-bank/app.env
 - Build first time: `docker compose build -d`
 - Start docker: `docker compose up -d`
 - Stop docker: `docker compose down`
