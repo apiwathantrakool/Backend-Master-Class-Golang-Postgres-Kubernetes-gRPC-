@@ -23,6 +23,7 @@ https://dbdiagram.io/d/%5Btutorial%5DSimple-bank-65ffa82dae072629ceccb8e2
 
 - Update env to use local db path at tutorial-simple-bank/app.env
 - `docker run --name simple-postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres`
+- `make server`
 
 ### Run test
 
@@ -35,3 +36,9 @@ https://dbdiagram.io/d/%5Btutorial%5DSimple-bank-65ffa82dae072629ceccb8e2
 - Build first time: `docker compose build -d`
 - Start docker: `docker compose up -d`
 - Stop docker: `docker compose down`
+
+## Migrate DB
+
+- Create migration: `migrate create -ext sql -dir db/migration -seq example_name`
+- Migrate up: `make migrateup`
+- Migrate down: `make migratedown`
