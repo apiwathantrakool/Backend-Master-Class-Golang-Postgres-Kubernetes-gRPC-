@@ -17,6 +17,10 @@ https://github.com/techschool/simplebank/commits/master/?before=931b0d98159595ba
 DB diagram:
 https://dbdiagram.io/d/%5Btutorial%5DSimple-bank-65ffa82dae072629ceccb8e2
 
+## Get start
+
+- Install packages: `go mod tidy`
+
 ## Run app locally
 
 ### Start DB
@@ -42,3 +46,7 @@ https://dbdiagram.io/d/%5Btutorial%5DSimple-bank-65ffa82dae072629ceccb8e2
 - Create migration: `migrate create -ext sql -dir db/migration -seq example_name`
 - Migrate up: `make migrateup`
 - Migrate down: `make migratedown`
+
+## RPC
+
+- Generate proto: `make proto`
