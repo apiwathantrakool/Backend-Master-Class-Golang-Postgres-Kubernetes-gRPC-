@@ -28,8 +28,8 @@ func main() {
 
 	store := db.NewStore(conn)
 
-	// Comment or Uncomment to select server run
-	// runGrpcServer(config, store)
+	// Run 2 servers in parallel
+	go runGrpcServer(config, store)
 	runGinServer(config, store)
 }
 
