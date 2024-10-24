@@ -50,3 +50,4 @@ https://dbdiagram.io/d/%5Btutorial%5DSimple-bank-65ffa82dae072629ceccb8e2
 ## RPC
 
 - Generate proto: `make proto`
+- Create Grpc once, can run both rpc and http: https://github.com/grpc-ecosystem/grpc-gateway
