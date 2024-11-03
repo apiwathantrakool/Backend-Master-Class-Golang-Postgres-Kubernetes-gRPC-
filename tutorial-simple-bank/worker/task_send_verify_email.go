@@ -26,10 +26,13 @@ func (distributor *RedisTaskDistributor) DistributeTaskSendVerifyEmail(
 	}
 
 	task := asynq.NewTask(TaskSendVerifyEmail, jsonPayload, opts...)
-	_, err = distributor.client.EnqueueContext(ctx, task)
+	info, err := distributor.client.EnqueueContext(ctx, task)
 	if err != nil {
 		return fmt.Errorf("failed to enqueue task: %w", err)
 	}
+
+	fmt.Println("type:", task.Type(), "| payload:", string(task.Payload()),
+		"| queue:", info.Queue, "| max_retry:", info.MaxRetry, "| msg: enqueued task")
 
 	return nil
 }
@@ -40,13 +43,16 @@ func (processor *RedisTaskProcessor) ProcessTaskSendVerifyEmail(ctx context.Cont
 		return fmt.Errorf("failed to unmarshal payload: %w", asynq.SkipRetry)
 	}
 
-	_, err := processor.store.GetUser(ctx, payload.Username)
+	user, err := processor.store.GetUser(ctx, payload.Username)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return fmt.Errorf("user doesn't exist: %w", asynq.SkipRetry)
 		}
 		return fmt.Errorf("failed to get user: %w", err)
 	}
+
+	fmt.Println("type:", task.Type(), "| payload:", string(task.Payload()),
+		"| email:", user.Email, "| msg: processed task")
 
 	return nil
 }
