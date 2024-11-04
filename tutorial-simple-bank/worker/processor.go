@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hibiken/asynq"
 	db "github.com/tutorial/simple-bank/db/sqlc"
@@ -30,6 +31,10 @@ func NewRedisTaskProcessor(redisOpt asynq.RedisClientOpt, store db.Store) TaskPr
 				QueueCritical: 10,
 				QueueDefault:  5,
 			},
+			ErrorHandler: asynq.ErrorHandlerFunc(func(ctx context.Context, task *asynq.Task, err error) {
+				fmt.Println("error:", err, "| type:", string(task.Type()),
+					"| payload:", string(task.Payload()))
+			}),
 		},
 	)
 
